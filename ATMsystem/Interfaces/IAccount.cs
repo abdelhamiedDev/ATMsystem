@@ -12,4 +12,4 @@ namespace ATMsystem.Interfaces
         bool Withdraw(decimal amount);
         bool ValidatePin(string inputPin);
     }
-}
+}   

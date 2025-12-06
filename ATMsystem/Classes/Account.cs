@@ -1,22 +1,18 @@
 ﻿using ATMsystem.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
+
 
 namespace ATMsystem.Classes
 {
-    // 6. Abstract Class
+    // Abstract Class
     // 4. Abstraction
     public abstract class Account : IAccount
     {
-        // 15. Access Modifiers (Protected)
         protected string accountNumber;
         protected decimal balance;
         private string pin;
 
-        // 12. Default Constructor
+        // Default Constructor
         public Account()
         {
             accountNumber = "";

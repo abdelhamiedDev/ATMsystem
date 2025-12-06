@@ -1,0 +1,93 @@
+classDiagram
+    direction TB
+
+    %% ===== INTERFACES =====
+    class IAccount {
+        <<interface>>
+        +AccountNumber: string
+        +Balance: decimal
+        +Deposit(amount: decimal): decimal
+        +Withdraw(amount: decimal): bool
+        +ValidatePin(inputPin: string): bool
+    }
+
+    class ITransaction {
+        <<interface>>
+        +Execute(): bool
+        +DisplayReceipt(): void
+    }
+
+    %% ===== ABSTRACT CLASS =====
+    class Account {
+        <<abstract>>
+        #accountNumber: string
+        #balance: decimal
+        -pin: string
+        +AccountNumber: string
+        +Balance: decimal
+        +Deposit(amount: decimal): decimal
+        +Withdraw(amount: decimal): bool
+        #ValidateAmount(amount: decimal): bool
+        +ValidatePin(inputPin: string): bool
+    }
+
+    %% ===== CONCRETE CLASSES =====
+    class SavingsAccount {
+        -interestRate: decimal
+        -MIN_BALANCE: decimal
+        +Withdraw(amount: decimal): bool
+        +ApplyInterest(): void
+    }
+
+    class CurrentAccount {
+        -overdraftLimit: decimal
+        +Withdraw(amount: decimal): bool
+        +GetOverdraftLimit(): decimal
+    }
+
+    class Customer {
+        -customerId: string
+        -name: string
+        -phoneNumber: string
+        -accounts: List~Account~
+        +Name: string
+        +PhoneNumber: string
+        +CustomerId: string
+        +Accounts: IReadOnlyList~Account~
+        +AddAccount(account: Account): void
+        +DisplayInfo(): void
+    }
+
+    class ATM {
+        <<sealed>>
+        -atmId: string
+        -cashAvailable: decimal
+        -atmCount: int
+        +AtmId: string
+        +GetATMCount(): int
+        +Authenticate(account: IAccount, pin: string): bool
+        +DispenseCash(amount: decimal): bool
+    }
+
+    class Transaction {
+        -transactionId: string
+        -amount: decimal
+        -date: DateTime
+        -account: IAccount
+        -type: string
+        +TransactionId: string
+        +Amount: decimal
+        +Date: DateTime
+        +Type: string
+        +Execute(): bool
+        +DisplayReceipt(): void
+    }
+
+    %% ===== RELATIONSHIPS =====
+    IAccount <|.. Account
+    Account <|-- SavingsAccount
+    Account <|-- CurrentAccount
+    ITransaction <|.. Transaction
+    Customer o-- Account
+    Transaction --> IAccount
+    ATM --> IAccount

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+// encapsulation is applied here 
 namespace ATMsystem.Classes
 {
     // Customer Class

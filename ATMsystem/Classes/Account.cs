@@ -62,9 +62,13 @@ namespace ATMsystem.Classes
 
         public bool ValidatePin(string inputPin)
         {
-
+            if (string.IsNullOrEmpty(inputPin) || inputPin.Length < 4 || inputPin.Length > 4 || inputPin.All(char.IsDigit) == false)   
+            {
+                return false;
+            }
             return pin == inputPin;
         }
+        
     }
 
 

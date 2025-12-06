@@ -1,5 +1,5 @@
-﻿using ATMsystem.Classes;
-using System;
+﻿using System;
+using ATMsystem.Classes;
 using System.Transactions;
 
 namespace ATMsystem
@@ -9,9 +9,9 @@ namespace ATMsystem
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("╔════════════════════════════════════╗");
-            Console.WriteLine("║     Welcome to ATM System          ║");
-            Console.WriteLine("╚════════════════════════════════════╝\n");
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("|     Welcome to ATM System         |");
+            Console.WriteLine("-------------------------------------\n");
 
             // Get Customer Information
             Console.Write("Enter your name: ");
@@ -54,6 +54,8 @@ namespace ATMsystem
 
             customer.AddAccount(account);
 
+            
+
             // Create ATM
             ATM atm = new ATM("ATM001", 100000);
 
@@ -73,6 +75,8 @@ namespace ATMsystem
                 Console.WriteLine("║ 4. Exit                            ║");
                 Console.WriteLine("╚════════════════════════════════════╝");
                 Console.Write("\nChoose an option: ");
+
+
                 string choice = Console.ReadLine();
 
                 switch (choice)

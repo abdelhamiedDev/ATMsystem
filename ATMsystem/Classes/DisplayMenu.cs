@@ -19,6 +19,8 @@ namespace ATMsystem.Classes
             {
             Console.Write("Enter your name: ");
             name = Console.ReadLine();
+                if (Authenticattion.is_null_or_empty(name))
+                    Console.WriteLine("❌ Invalid! Please Try Again");
             }
             while (Authenticattion.is_null_or_empty(name));
             
@@ -26,9 +28,11 @@ namespace ATMsystem.Classes
             string customerId;
             do
             {
-                
+            
             Console.Write("Enter your Customer ID: ");
             customerId = Console.ReadLine();
+            if (Authenticattion.is_null_or_empty(customerId))
+                Console.WriteLine("❌ Invalid! Please Try Again");
             }
             while (Authenticattion.is_null_or_empty(customerId));
 
@@ -38,6 +42,8 @@ namespace ATMsystem.Classes
                 
             Console.Write("Enter your phone number: ");
             phone = Console.ReadLine();
+                if (Authenticattion.is_null_or_empty(phone))
+                    Console.WriteLine("❌ Invalid! Please Try Again");
             }
             while(Authenticattion.is_null_or_empty(phone));
 
@@ -46,29 +52,97 @@ namespace ATMsystem.Classes
             Customer customer = new Customer(customerId, name, phone);
 
             // Account Setup
-            Console.WriteLine("\n--- Account Setup ---");
-            Console.Write("Choose Account Type (1-Savings / 2-Current): ");
-            string accountType = Console.ReadLine();
 
-            Console.Write("Enter Account Number: ");
-            string accountNumber = Console.ReadLine();
+            string accountType;
+            do
+            {
+                Console.WriteLine("\n--- Account Setup ---");
+                Console.Write("Choose Account Type (1-Savings / 2-Current): ");
+                accountType = Console.ReadLine();
+                if (!int.TryParse(accountType, out int accountTypeNum)
+                ||(accountTypeNum !=1 && accountTypeNum != 2) 
+                || string.IsNullOrWhiteSpace(accountType))
+                    {
+                    Console.WriteLine("❌ Invalid! Please Try again");
+                        accountType = "";
+                    }
 
-            Console.Write("Enter Initial Balance: ");
-            decimal initialBalance = decimal.Parse(Console.ReadLine());
+            }
+            while(!int.TryParse(accountType, out int result)
+                || (result !=1 && result != 2) 
+                || string.IsNullOrWhiteSpace(accountType));
 
-            Console.Write("Create a 4-digit PIN: ");
-            string pin = Console.ReadLine();
+            string accountNumber;
+            while (true)
+            {
+                Console.Write("Enter Account Number: ");
+                accountNumber = Console.ReadLine()?.Trim();
+                if (!string.IsNullOrWhiteSpace(accountNumber) && accountNumber.Length >= 8 && 
+                    accountNumber.Length <= 12 && accountNumber.All(char.IsDigit)) break;
+                Console.WriteLine("❌ Invalid! Must be 8-12 digits (numbers only).");
+            }
+
+
+            decimal initialBalanceDec = 0;
+            bool validBalance = false;
+
+            do
+            {
+                Console.Write("Enter Initial Balance: $");
+                string initialBalanceInput = Console.ReadLine();
+                
+                // Validate input
+                if (string.IsNullOrWhiteSpace(initialBalanceInput))
+                {
+                    Console.WriteLine("❌ Invalid! Initial balance cannot be empty.");
+                    continue;
+                }
+                
+                // Try to parse as decimal
+                if (!decimal.TryParse(initialBalanceInput, out decimal parsedBalance))
+                {
+                    Console.WriteLine("❌ Invalid! Please enter a valid number (e.g., 1000.50).");
+                    continue;
+                }
+                
+                // Validate business rules
+                if (parsedBalance < 0)
+                {
+                    Console.WriteLine("❌ Invalid! Initial balance cannot be negative.");
+                    continue;
+                }
+                
+                if (parsedBalance > 1000000) // Reasonable limit
+                {
+                    Console.WriteLine("❌ Invalid! Initial balance cannot exceed $1,000,000.");
+                    continue;
+                }
+                
+                // Success - store the decimal value
+                initialBalanceDec = parsedBalance;
+                validBalance = true;
+            }
+            while (!validBalance);
+
+            string pin;
+            while (true)
+            {
+                Console.Write("Create a 4-digit PIN: ");
+                pin = Console.ReadLine()?.Trim();
+                if (!string.IsNullOrWhiteSpace(pin) && pin.Length == 4 && pin.All(char.IsDigit)) break;
+                Console.WriteLine("❌ Invalid! Must be exactly 4 digits (numbers only).");
+            }
 
             // 4. Abstraction - using base class type
             Account account;
             if (accountType == "1")
             {
-                account = new SavingsAccount(accountNumber, initialBalance, pin); // 2. Inheritance
+                account = new SavingsAccount(accountNumber, initialBalanceDec, pin); // 2. Inheritance
                 Console.WriteLine("Savings Account created!");
             }
             else
             {
-                account = new CurrentAccount(accountNumber, initialBalance, pin); // 2. Inheritance
+                account = new CurrentAccount(accountNumber, initialBalanceDec, pin); // 2. Inheritance
                 Console.WriteLine("Current Account created!");
             }
 

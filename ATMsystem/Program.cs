@@ -9,7 +9,7 @@ namespace ATMsystem
     {
         static void Main(string[] args)
         {
-            
+            Console.Clear();
             DisplayMenu.Display_Menu();
             
         }

@@ -4,21 +4,24 @@ using System.Text;
 
 namespace ATMsystem.Classes
 {
-    // Inheritance - SavingsAccount
+    // 2. Inheritance
     public class SavingsAccount : Account
     {
         private decimal interestRate;
         private const decimal MIN_BALANCE = 1000;
 
+        // 21. Super / Base Keyword
         public SavingsAccount(string accountNumber, decimal balance, string pin)
             : base(accountNumber, balance, pin)
         {
             this.interestRate = 0.05m;
         }
 
-        // Method Overriding
+        // 10. Method Overriding
+        // 20. Override Keyword
         public override bool Withdraw(decimal amount)
         {
+            // 3. Polymorphism (Different behavior for Withdraw)
             if (balance - amount >= MIN_BALANCE)
             {
                 balance -= amount;

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ATMsystem.Interfaces
 {
+    // 5. Interface
     internal interface ITransaction
     {
         bool Execute();

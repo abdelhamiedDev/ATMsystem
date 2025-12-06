@@ -4,8 +4,7 @@ using System.Text;
 
 namespace ATMsystem.Classes
 {
-
-    // Inheritance - CurrentAccount
+    // 2. Inheritance
     public class CurrentAccount : Account
     {
         private decimal overdraftLimit;
@@ -16,7 +15,8 @@ namespace ATMsystem.Classes
             this.overdraftLimit = 5000;
         }
 
-        // Method Overriding (Polymorphism)
+        // 10. Method Overriding
+        // 3. Polymorphism
         public override bool Withdraw(decimal amount)
         {
             if (balance + overdraftLimit >= amount)

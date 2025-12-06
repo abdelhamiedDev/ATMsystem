@@ -1,12 +1,10 @@
 using System;
 using ATMsystem.Classes;
-using System.Transactions;
+using ATMsystem.Interfaces;
 
-// using ATMsystem.Interfaces;
-
+// 23. Namespaces / Packages
 namespace ATMsystem
 {
-    // Main Program
     class Program
     {
         static void Main(string[] args)
@@ -42,21 +40,20 @@ namespace ATMsystem
             Console.Write("Create a 4-digit PIN: ");
             string pin = Console.ReadLine();
 
+            // 4. Abstraction - using base class type
             Account account;
             if (accountType == "1")
             {
-                account = new SavingsAccount(accountNumber, initialBalance, pin);
+                account = new SavingsAccount(accountNumber, initialBalance, pin); // 2. Inheritance
                 Console.WriteLine("Savings Account created!");
             }
             else
             {
-                account = new CurrentAccount(accountNumber, initialBalance, pin);
+                account = new CurrentAccount(accountNumber, initialBalance, pin); // 2. Inheritance
                 Console.WriteLine("Current Account created!");
             }
 
             customer.AddAccount(account);
-
-            
 
             // Create ATM
             ATM atm = new ATM("ATM001", 100000);
@@ -78,7 +75,6 @@ namespace ATMsystem
                 Console.WriteLine("╚════════════════════════════════════╝");
                 Console.Write("\nChoose an option: ");
 
-
                 string choice = Console.ReadLine();
 
                 switch (choice)
@@ -89,7 +85,8 @@ namespace ATMsystem
                         string checkPin = Console.ReadLine();
                         if (atm.Authenticate(account, checkPin))
                         {
-                            Console.WriteLine($"\nCurrent Balance: {account.GetBalance():C}");
+                             // 1. Encapsulation - accessing via property
+                            Console.WriteLine($"\nCurrent Balance: {account.Balance:C}");
                         }
                         else
                         {
@@ -107,6 +104,8 @@ namespace ATMsystem
                             decimal withdrawAmount = decimal.Parse(Console.ReadLine());
 
                             Classes.Transaction withdrawTrans = new Classes.Transaction(account, withdrawAmount, "Withdraw");
+                            
+                            // 3. Polymorphism (Execute calls specific Withdraw)
                             if (withdrawTrans.Execute() && atm.DispenseCash(withdrawAmount))
                             {
                                 withdrawTrans.DisplayReceipt();
@@ -128,6 +127,8 @@ namespace ATMsystem
                             decimal depositAmount = decimal.Parse(Console.ReadLine());
 
                             Classes.Transaction depositTrans = new Classes.Transaction(account, depositAmount, "Deposit");
+                            
+                            // 3. Polymorphism
                             depositTrans.Execute();
                             depositTrans.DisplayReceipt();
                         }
@@ -140,8 +141,8 @@ namespace ATMsystem
                     case "4":
                         // Exit
                         Console.WriteLine("\nThank you for using our ATM!");
-                        Console.WriteLine($"Customer: {customer.GetName()}");
-                        Console.WriteLine($"Final Balance: {account.GetBalance():C}");
+                        Console.WriteLine($"Customer: {customer.Name}");
+                        Console.WriteLine($"Final Balance: {account.Balance:C}");
                         running = false;
                         break;
 

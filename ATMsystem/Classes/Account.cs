@@ -1,17 +1,22 @@
-﻿using System;
+﻿using ATMsystem.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Principal;
 using System.Text;
 
 namespace ATMsystem.Classes
 {
-    public abstract class Account
+    // 6. Abstract Class
+    // 4. Abstraction
+    public abstract class Account : IAccount
     {
+        // 15. Access Modifiers (Protected)
         protected string accountNumber;
         protected decimal balance;
         private string pin;
 
-        // Default Constructor
+        // 12. Default Constructor
         public Account()
         {
             accountNumber = "";
@@ -19,7 +24,7 @@ namespace ATMsystem.Classes
             pin = "";
         }
 
-        // Parameterized Constructor
+        // 13. Parameterized Constructor
         public Account(string accountNumber, decimal balance, string pin)
         {
             this.accountNumber = accountNumber;
@@ -27,8 +32,21 @@ namespace ATMsystem.Classes
             this.pin = pin;
         }
 
-        // Regular Method
-        public decimal Deposit(decimal amount)
+        // 18. Properties
+        public string AccountNumber
+        {
+            get { return accountNumber; }
+            protected set { accountNumber = value; }
+        }
+
+        public decimal Balance
+        {
+            get { return balance; }
+            protected set { balance = value; }
+        }
+
+        // 19. Virtual Methods
+        public virtual decimal Deposit(decimal amount)
         {
             if (ValidateAmount(amount))
             {
@@ -40,21 +58,10 @@ namespace ATMsystem.Classes
             return balance;
         }
 
-        // Abstract Method
+        // Abstract Method (Must be overridden)
         public abstract bool Withdraw(decimal amount);
 
-        // Getter
-        public decimal GetBalance()
-        {
-            return balance;
-        }
-
-        public string GetAccountNumber()
-        {
-            return accountNumber;
-        }
-
-        // Protected Method
+        // 15. Access Modifiers (Protected)
         protected bool ValidateAmount(decimal amount)
         {
             return amount > 0;
@@ -62,14 +69,12 @@ namespace ATMsystem.Classes
 
         public bool ValidatePin(string inputPin)
         {
-            if (string.IsNullOrEmpty(inputPin) || inputPin.Length < 4 || inputPin.Length > 4 || inputPin.All(char.IsDigit) == false)   
+             // Simple PIN validation
+            if (string.IsNullOrEmpty(inputPin) || inputPin.Length != 4)   
             {
                 return false;
             }
             return pin == inputPin;
         }
-        
     }
-
-
 }

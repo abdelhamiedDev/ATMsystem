@@ -4,22 +4,23 @@ using System.Text;
 
 namespace ATMsystem.Classes
 {
-
     // Customer Class
     public class Customer
     {
+        // 15. Access Modifiers (Private)
         private string customerId;
         private string name;
         private string phoneNumber;
         private List<Account> accounts;
 
-        // Default Constructor
+        // 12. Default Constructor
         public Customer()
         {
             accounts = new List<Account>();
         }
 
-        // Parameterized Constructor
+        // 13. Parameterized Constructor
+        // 9. Method Overloading (Constructor is a type of method and overloaded here)
         public Customer(string customerId, string name, string phoneNumber)
         {
             this.customerId = customerId;
@@ -28,41 +29,42 @@ namespace ATMsystem.Classes
             this.accounts = new List<Account>();
         }
 
-        // Getter/Setter
-        public string GetName()
+        // 18. Properties
+        public string Name
         {
-            return name;
+            get { return name; }
+            set { name = value; }
         }
 
-        public void SetName(string name)
+        public string PhoneNumber
         {
-            this.name = name;
+            get { return phoneNumber; }
+            set { phoneNumber = value; }
         }
 
-        // Property
         public string CustomerId
         {
             get { return customerId; }
             set { customerId = value; }
         }
 
-        // Method Overloading
+        public IReadOnlyList<Account> Accounts
+        {
+            get { return accounts.AsReadOnly(); }
+        }
+
+        // 8. Instance Members
         public void AddAccount(Account account)
         {
             accounts.Add(account);
         }
 
-        public List<Account> GetAccounts()
-        {
-            return accounts;
-        }
-
         public void DisplayInfo()
         {
             Console.WriteLine($"\n--- Customer Information ---");
-            Console.WriteLine($"ID: {customerId}");
-            Console.WriteLine($"Name: {name}");
-            Console.WriteLine($"Phone: {phoneNumber}");
+            Console.WriteLine($"ID: {CustomerId}");
+            Console.WriteLine($"Name: {Name}");
+            Console.WriteLine($"Phone: {PhoneNumber}");
             Console.WriteLine($"Number of Accounts: {accounts.Count}");
         }
     }

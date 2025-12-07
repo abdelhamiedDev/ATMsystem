@@ -6,6 +6,7 @@ namespace ATMsystem.Classes
 {
     class Authenticattion
     {
+        // static method
         static public bool is_null_or_empty(string sample)
         {
             if (sample == "") return true;

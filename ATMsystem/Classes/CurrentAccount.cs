@@ -13,8 +13,8 @@ namespace ATMsystem.Classes
             this.overdraftLimit = 5000;
         }
 
-        // 10. Method Overriding
-        // 3. Polymorphism
+        // Method Overriding
+        // Polymorphism
         public override bool Withdraw(decimal amount)
         {
             if (balance + overdraftLimit >= amount)

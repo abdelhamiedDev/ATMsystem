@@ -139,15 +139,14 @@ namespace ATMsystem.Classes
             {
                 account = new SavingsAccount(accountNumber, initialBalanceDec, pin); // 2. Inheritance
                 Console.WriteLine("Savings Account created!");
+                ((SavingsAccount)account).ApplyInterest();
             }
             else
             {
                 account = new CurrentAccount(accountNumber, initialBalanceDec, pin); // 2. Inheritance
                 Console.WriteLine("Current Account created!");
             }
-
             customer.AddAccount(account);
-
             // Create ATM
             ATM atm = new ATM("ATM001", 100000);
 
@@ -158,14 +157,15 @@ namespace ATMsystem.Classes
             bool running = true;
             while (running)
             {
-                Console.WriteLine("\n╔════════════════════════════════════╗");
-                Console.WriteLine("║          ATM Main Menu             ║");
-                Console.WriteLine("╠════════════════════════════════════╣");
-                Console.WriteLine("║ 1. Check Balance                   ║");
-                Console.WriteLine("║ 2. Withdraw Money                  ║");
-                Console.WriteLine("║ 3. Deposit Money                   ║");
-                Console.WriteLine("║ 4. Exit                            ║");
-                Console.WriteLine("╚════════════════════════════════════╝");
+                Console.WriteLine("\n------------------------------------");
+                Console.WriteLine("|          ATM Main Menu             |");
+                Console.WriteLine("|------------------------------------|");
+                Console.WriteLine("| 1. Check Balance                   |");
+                Console.WriteLine("| 2. Withdraw Money                  |");
+                Console.WriteLine("| 3. Deposit Money                   |");
+                Console.WriteLine("| 4. Exit                            |");
+                Console.WriteLine("| 5. Display info                    |");
+                Console.WriteLine("-------------------------------------|");
                 Console.Write("\nChoose an option: ");
 
                 string choice = Console.ReadLine();
@@ -178,7 +178,7 @@ namespace ATMsystem.Classes
                         string checkPin = Console.ReadLine();
                         if (atm.Authenticate(account, checkPin))
                         {
-                             // 1. Encapsulation - accessing via property
+                             // Encapsulation - accessing via property
                             Console.WriteLine($"\nCurrent Balance: {account.Balance:C}");
                         }
                         else
@@ -196,7 +196,7 @@ namespace ATMsystem.Classes
                             Console.Write("Enter amount to withdraw: ");
                             decimal withdrawAmount = decimal.Parse(Console.ReadLine());
 
-                            Classes.Transaction withdrawTrans = new Classes.Transaction(account, withdrawAmount, "Withdraw");
+                            Transaction withdrawTrans = new Transaction(account, withdrawAmount, "Withdraw");
                             
                             // 3. Polymorphism (Execute calls specific Withdraw)
                             if (withdrawTrans.Execute() && atm.DispenseCash(withdrawAmount))
@@ -219,7 +219,7 @@ namespace ATMsystem.Classes
                             Console.Write("Enter amount to deposit: ");
                             decimal depositAmount = decimal.Parse(Console.ReadLine());
 
-                            Classes.Transaction depositTrans = new Classes.Transaction(account, depositAmount, "Deposit");
+                            Transaction depositTrans = new Transaction(account, depositAmount, "Deposit");
                             
                             // 3. Polymorphism
                             depositTrans.Execute();
@@ -238,7 +238,18 @@ namespace ATMsystem.Classes
                         Console.WriteLine($"Final Balance: {account.Balance:C}");
                         running = false;
                         break;
-
+                    case "5":
+                    Console.Write("Enter PIN: ");
+                        string displayPin = Console.ReadLine();
+                        if (atm.Authenticate(account, displayPin))
+                        {
+                            customer.DisplayInfo();
+                        }
+                        else
+                        {   
+                            Console.WriteLine("Invalid PIN!");
+                        }
+                        break;
                     default:
                         Console.WriteLine("Invalid option!");
                         break;
@@ -252,3 +263,6 @@ namespace ATMsystem.Classes
         
     }
 }
+
+
+

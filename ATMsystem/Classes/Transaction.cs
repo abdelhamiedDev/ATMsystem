@@ -3,17 +3,17 @@ using System;
 
 namespace ATMsystem.Classes
 {
-    // 24. Classes Types (Normal Class)
+    // Classes Types (Normal Class)
     public class Transaction : ITransaction
     {
-        // 1. Encapsulation (Private Fields)
+        // Encapsulation (Private Fields)
         private string transactionId;
         private decimal amount;
         private DateTime date;
         private IAccount account;
         private string type;
 
-        // 13. Parameterized Constructor
+        // Parameterized Constructor
         public Transaction(IAccount account, decimal amount, string type)
         {
             this.transactionId = Guid.NewGuid().ToString().Substring(0, 8);
@@ -23,13 +23,13 @@ namespace ATMsystem.Classes
             this.type = type;
         }
 
-        // 14. Destructor
+        // Destructor
         ~Transaction()
         {
             // Code cleanup if needed
         }
 
-        // 18. Properties
+        // Properties
         public string TransactionId
         {
             get { return transactionId; } // 17. Getter

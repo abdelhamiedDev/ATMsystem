@@ -5,22 +5,23 @@ using System;
 namespace ATMsystem.Classes
 {
     // Abstract Class
-    // 4. Abstraction
+    // Abstraction
     public abstract class Account : IAccount
     {
         protected string accountNumber;
         protected decimal balance;
         private string pin;
 
-        // Default Constructor
-        public Account()
-        {
-            accountNumber = "";
-            balance = 0;
-            pin = "";
-        }
+        // Default Constructor (No Needed)
+        // public Account()
+        // {
+        //     accountNumber = "";
+        //     balance = 0;
+        //     pin = "";
+        // }
 
-        // 13. Parameterized Constructor
+        // Parameterized Constructor
+        // this keyword is used to refer to the current instance of the class
         public Account(string accountNumber, decimal balance, string pin)
         {
             this.accountNumber = accountNumber;
@@ -28,11 +29,12 @@ namespace ATMsystem.Classes
             this.pin = pin;
         }
 
-        // 18. Properties
+        // Properties 
+        // getters and setters
         public string AccountNumber
         {
             get { return accountNumber; }
-            protected set { accountNumber = value; }
+            set { accountNumber = value; }
         }
 
         public decimal Balance
@@ -41,7 +43,7 @@ namespace ATMsystem.Classes
             protected set { balance = value; }
         }
 
-        // 19. Virtual Methods
+        // Virtual Methods
         public virtual decimal Deposit(decimal amount)
         {
             if (ValidateAmount(amount))
@@ -57,11 +59,11 @@ namespace ATMsystem.Classes
         // Abstract Method (Must be overridden)
         public abstract bool Withdraw(decimal amount);
 
-        // 15. Access Modifiers (Protected)
+        // Access Modifiers (Protected)
         protected bool ValidateAmount(decimal amount)
         {
             return amount > 0;
-        }
+        }   
 
         public bool ValidatePin(string inputPin)
         {

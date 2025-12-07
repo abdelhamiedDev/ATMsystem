@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-// encapsulation is applied here 
+using System.Xml;
+
+// Encapsulation is applied here 
 namespace ATMsystem.Classes
 {
     // Customer Class
     public class Customer
     {
-        // 15. Access Modifiers (Private)
+        // Access Modifiers (Private)
         private string customerId;
         private string name;
         private string phoneNumber;
         private List<Account> accounts;
 
-        // 12. Default Constructor
+        // Default Constructor
         public Customer()
         {
             accounts = new List<Account>();
         }
 
-        // 13. Parameterized Constructor
-        // 9. Method Overloading (Constructor is a type of method and overloaded here)
+        // Parameterized Constructor
+        // Method Overloading (Constructor is a type of method and overloaded here)
         public Customer(string customerId, string name, string phoneNumber)
         {
             this.customerId = customerId;
@@ -29,7 +31,7 @@ namespace ATMsystem.Classes
             this.accounts = new List<Account>();
         }
 
-        // 18. Properties
+        // Properties
         public string Name
         {
             get { return name; }
@@ -53,13 +55,13 @@ namespace ATMsystem.Classes
             get { return accounts.AsReadOnly(); }
         }
 
-        // 8. Instance Members
+        // Instance Members
         public void AddAccount(Account account)
         {
             accounts.Add(account);
         }
 
-        public void DisplayInfo()
+            public void DisplayInfo()
         {
             Console.WriteLine($"\n--- Customer Information ---");
             Console.WriteLine($"ID: {CustomerId}");
